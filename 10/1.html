@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-01</title>
+</head>
+<body>
+    <script>
+        let k=0;
+        function func(){
+            let div=document.getElementById('body');
+            let socket=new WebSocket('ws:/localhost:4000/wsserver');
+            socket.onopen=()=>{
+                div.innerHTML+='socket.onopen</br>';
+                setInterval(() => {
+                    socket.send(++k);
+                }, 3000);
+            };
+            socket.onclose=(e)=>div.innerHTML+=`socket.onclose ${e}`;
+            socket.onmessage=(e)=>{
+                div.innerHTML+=`${e.data}</br>`;
+            }
+            socket.onerror=function(error) {alert('Error'+error.message);};
+        }
+    </script>
+    <h1>10-01</h1>
+    <br/>
+    <input type="button" onclick="func()" value="startWS"/>
+    <div id="body"></div>
+</body>
+</html>
