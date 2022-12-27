@@ -1,0 +1,3 @@
+﻿  ClientU.cpp
+E:\5sem\nodejs\13\ClientU\ClientU\ClientU.cpp(112,7): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  ClientU.vcxproj -> E:\5sem\nodejs\13\ClientU\x64\Debug\ClientU.exe
