@@ -1,0 +1,11 @@
+.danger{
+    color:blueviolet;
+}
+
+#doc{
+    font-size: 30px;
+}
+body{
+    font-family: 'Courier New', Courier, monospace;
+    background-color: bisque;
+}

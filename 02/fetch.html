@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>text:</h1>
+    <h2 id="inner"></h2>
+    <script>
+      let elem = document.getElementById("inner");
+      fetch("/api/name").then((res) => {
+        res.text().then((text) => {
+          elem.append(text);
+        });
+      });
+    </script>
+  </body>
+</html>

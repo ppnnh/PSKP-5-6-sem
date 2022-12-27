@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-02</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .col-3{
+            border-radius: 10px;
+            margin-bottom: 5px; 
+            font-weight: bold;
+            background-color: rgb(252, 221, 255);
+        }
+        button{
+            border-radius: 10px;
+            background-color: rgb(217, 85, 250);
+            width: 100px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        button:hover{
+            background: transparent;
+        }
+        body{
+            background-color: rgb(247, 204, 255);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LABA 04</h1>
+    <div id="get_res"></div>
+    <button onclick="get()">GET</button>
+
+<div style="padding: 20px">
+<form>
+    <div class="row">
+        <label class="col-2">ID</label>
+        <input type="number" class="col-3" id="ID" min="1"/>
+    </div>
+
+    <div class="row">
+        <label class="col-2">NAME</label>
+        <input type="text" class="col-3" id="NAME" pattern="[a-z]{1,12}"/>
+    </div>
+
+    <div class="row">
+        <label class="col-2">BDAY</label>
+        <input type="date" class="col-3" id="BDAY"/>
+    </div>
+
+    <div class="row">
+        <button class="col-2" onclick="post()">POST</button>
+    </div>
+</form>
+
+
+<button class="col-2" onclick="check()">CHECK</button>
+<form>
+    <div>
+        <div class="row">
+            <label class="col-2">ID</label>
+            <input type="number" class="col-3"  id="Id" min="1"/>
+        </div>
+        <div class='row'>
+            <label class='col-2'>NEW NAME</label>
+            <input type="text" class="col-3" id="NEWNAME" pattern="[a-z]{1,12}" />
+        </div>
+        <div class='row'>
+            <label class='col-2'>NEW BDAY</label>
+            <input type="date" class='col-3' id='NEWBDAY'/>
+        </div>
+        <div class="row">
+            <button class="col-2" onclick="put()">PUT</button>
+        </div>
+    </div>
+</form>
+
+<form>
+    <div>
+        <div class="row">
+            <label class="col-2">ID</label>
+            <input type="number" class="col-3" id="idd" min="1"/>
+        </div>
+        <div class="row">
+            <button class="col-2" onclick="DELETE()">DELETE</button>
+        </div>
+    </div>
+</div>
+</form>
+<script>
+    BDAY.max=new Date().toISOString().split("T")[0];
+    NEWBDAY.max=new Date().toISOString().split("T")[0];
+
+    function get(){
+        console.log('get');
+        fetch('http://localhost:5000/api/db',{
+            method:'GET', mode:'no-cors',
+            headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+        })
+    .then(resp=>{return resp.json();})
+    .then((pdata)=>{
+        console.log('pdata', pdata);
+        get_res.innerHTML='';
+        pdata.forEach(el=>{get_res.innerHTML +=(el.id+'. '+el.name+' '+el.bday+'<br/>');})
+    });
+    }
+
+    function post(){
+        console.log('post');
+
+        let id=document.getElementById('ID');
+        let name=document.getElementById('NAME');
+        let bday=document.getElementById('BDAY');
+
+        fetch('http://localhost:5000/api/db',{
+            method:'POST', 
+            headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+            body: JSON.stringify({id: id.value, name: name.value, bday: bday.value})
+        })
+        
+        .then(resp=>{return resp.json();})
+        .then((pdata)=>{console.log('post.pdata', pdata);});
+    }
+    
+    function put(){
+        console.log('put');
+
+        let id=document.getElementById('Id');
+        let name=document.getElementById('NEWNAME');
+        let bday=document.getElementById('NEWBDAY');
+
+        fetch('http://localhost:5000/api/db',{
+            method: 'PUT',
+            headers:{'Content-Type': 'application/json', 'Accept':'application/json'},
+            body: JSON.stringify({id: id.value, name: name.value, bday: bday.value})
+        })
+        .then(resp=>{return resp.json();})
+        .then((pdata)=>{console.log('PUT.pdata',pdata);})
+    }
+
+    function check(){
+        fetch("http://localhost:5000/api/db", {
+            method: "GET",
+            mode: "no-cors",
+            headers: {"Content-Type": "application/json", "Accept": "application/json"}
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((pdata) => {
+            console.log("pdata", pdata);            
+            let index = document.getElementById("Id").value;
+            let person = pdata.find((item) => item.id == index);
+            document.getElementById("NEWNAME").value = person.name;
+            document.getElementById("NEWBDAY").value = person.bday;
+          });
+    }
+
+    function DELETE(){
+        console.log('DELETE');
+        let IDD=document.getElementById('idd');
+        if (IDD.value){
+            fetch(`http://localhost:5000/api/db?id=${IDD.value}`,{
+                method: 'DELETE',
+                headers: {'Content-Type':'application/json', 'Accept':'application/json'}
+            })
+            .then(resp=>{return resp.json();})
+            .then((pdata)=>{console.log('DELETE.pdata',pdata);})
+        }
+    }
+</script>
+</body>
+</html>

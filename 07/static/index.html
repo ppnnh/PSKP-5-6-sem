@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>lab07</title>
+</head>
+<body>
+    <h1>index.html</h1>
+    <h1 class="danger">CSS</h1>
+    <h1 id="result" onclick="color()">JS</h1>
+    <div>
+        <h2>Image</h2>
+        <image src="image.png" width="200px"/>
+    </div>
+    <div>
+        <h2>Video</h2>
+        <video controls width="200px">
+            <source src="video.mp4">
+        </video>
+    </div>
+    <div>
+        <a id="doc" href="doc.docx" >Download doc</a>
+    </div>
+    <div>
+        <h2>JSON</h2>
+        <div id="json"></div>
+    </div>
+    <div>
+        <h2>XML</h2>
+        <div id="xml"></div>
+    </div>
+    <script>
+        window.onload = function () {
+            fetch("http://localhost:5000/json.json", { method: "GET" })
+                .then((resp) => {
+                return resp.json();
+                })
+                .then((data) => {
+                document.getElementById("json").innerHTML = JSON.stringify(data);
+                });
+
+            fetch("http://localhost:5000/xml.xml", { method: "GET" })
+                .then((resp) => {
+                return resp.text();
+                })
+                .then((data) => {
+                document.getElementById("xml").innerHTML = data;
+                });
+        };
+    </script>
+</body>
+</html>

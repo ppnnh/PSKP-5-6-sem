@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+        body{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input{
+            border-radius: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <form action="http://localhost:5000/" method="POST">
+          
+            <div class="row">
+                <label class="col-2">Sender</label>
+                <input type="email" placeholder="box@mailserver" id="sender" name="sender" class="col-3" required/>
+            </div>
+
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </body>
+</html>

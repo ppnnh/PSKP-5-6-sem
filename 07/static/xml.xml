@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<people>
+    <person>
+        <name>Lera</name>
+        <group>5</group>
+    </person>
+    <person>
+        <name>Nastya</name>
+        <group>9</group>
+    </person>
+</people>

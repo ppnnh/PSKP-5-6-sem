@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab6</title>
+    <style>
+        body{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input{
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding:20px" id="get_res">
+        <div class="row">
+            <label class="col-2">Sender</label>
+            <input type="email" placeholder="box@mailserver" id="sender" name="sender" class="col-3" required/>
+        </div>
+
+        <div class="row">
+            <label class="col-2">Receiver</label>
+            <input type="email" placeholder="box@mailserver" id="receiver" name="receiver" class="col-3" required/>
+        </div>
+
+        <div class="row">
+            <label class="col-2">Message</label>
+            <input type="text" placeholder="done" id="message" name="message" class="col-3" required/>
+        </div>
+
+        <div class="row">
+            <button id="postButton" onclick="Post()">POST</button>
+        </div>
+    </div>
+
+    <script>
+        function Post(){
+            console.log('POST');
+            fetch('http://localhost:5000/', {
+                method: 'POST', mode: "no-cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'text/html'
+                },
+                body: JSON.stringify({
+                    sender: sender.value,
+                    receiver: receiver.value,
+                    message: message.value
+                })
+            }).then(response => response.text())
+                .then(pdata => alert(pdata));
+        }
+    </script>
+</body>
+</html>
