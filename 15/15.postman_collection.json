@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "6ea77c90-fc9c-4a38-9eae-cf7b3fd9dae5",
+		"name": "15",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23182065"
+	},
+	"item": [
+		{
+			"name": "all faculties",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/faculties",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"faculties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all pulpits",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pulpits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pulpits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "faculty",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/faculties/63a02d00c835a90ace8e1bcf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"faculties",
+						"63a02d00c835a90ace8e1bcf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pulpit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pulpits/63a06ff407c2a650040dc8b4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pulpits",
+						"63a06ff407c2a650040dc8b4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pulpits by faculty name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/pulpits?f=VS,LB",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pulpits"
+					],
+					"query": [
+						{
+							"key": "f",
+							"value": "VS,LB"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add faculty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"faculty\" : \"VS2\", \"faculty_name\" : \"sh2\" }"
+				},
+				"url": {
+					"raw": "localhost:4000/api/faculties",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"faculties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete faculty",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/api/faculties/VS2",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"faculties",
+						"VS2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update faculty",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \"_id\": \"63a06c5a07c2a650040dc8a0\",\"faculty\" : \"VS\", \"faculty_name\" : \"shtest\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/api/faculties",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"faculties"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update pulpit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"_id\": \"63a06ff407c2a650040dc8b3\",\r\n        \"pulpit\": \"VS2PULPIT\",\r\n        \"pulpit_name\": \"VS2PULPIT1111\",\r\n        \"faculty\": \"VS\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/api/pulpits",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pulpits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  { \"pulpit\": \"VS1PULPITest111113\", \"pulpit_name\": \"VS1PULPIT\",\"faculty\":\"VS\" },\r\n  { \"pulpit\": \"VS1PULPITest55780955\", \"pulpit_name\": \"VS1PULPIT\",\"faculty\":\"VS\" }\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/transaction",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add pulpit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \"pulpit\": \"VS3PULPITest1177\",\r\n        \"pulpit_name\": \"VS3PULPIT11\",\r\n        \"faculty\": \"VS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/api/pulpits",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"pulpits"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

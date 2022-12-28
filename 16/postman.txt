@@ -1,0 +1,178 @@
+getFaculty:
+	query getFac ($faculty: String) {
+	   getFaculties(FACULTY: $faculty) {
+	       FACULTY,
+	       FACULTY_NAME
+	   },
+	}
+
+	{
+	  "faculty": ""
+	}
+------------------------------------------------
+getSubject:
+	query subjects ($subject: String) {
+		getSubjects (SUBJECT: $subject) {
+			SUBJECT,
+			SUBJECT_NAME,
+			PULPIT
+		}
+	}
+
+	{
+	  "subject": ""
+	}
+-------------------------------------------------
+getTeacher:
+	query TEACHER ($teacher: String) {
+	    getTeachers (TEACHER: $teacher) {
+	        TEACHER,
+	        TEACHER_NAME,
+	        PULPIT
+	    }
+	}
+
+	{
+	  "teacher": ""
+	}
+----------------------------------------------------
+getPulpit:
+	query pulpits ($pulpit: String) {
+	    getPulpits (PULPIT: $pulpit) {
+	        PULPIT,
+	        PULPIT_NAME,
+	        FACULTY
+	    }
+	}
+	
+	{
+	  "pulpit": ""
+	}
+----------------------------------------------------
+getTeacherByFaculty:
+	query getTeachersByFaculty ($faculty: String!) {
+	   getTeachersByFaculty(FACULTY: $faculty) {
+	        TEACHERS {
+	            TEACHER,
+	            TEACHER_NAME,
+	            PULPIT
+	        },
+	        FACULTY
+	   },
+	}
+
+	{
+	    "faculty":"ТОВ"
+	}
+-------------------------------------------------------------
+getSubjectByFaculty:
+	query getSubjectsByFaculties ($faculty: String!) {
+	   getSubjectsByFaculties(FACULTY: $faculty) {
+	        PULPIT,
+	        PULPIT_NAME,
+	        FACULTY,
+	        SUBJECTS {
+        	    SUBJECT,
+	            SUBJECT_NAME,
+	            PULPIT
+        	}
+	   },
+	}
+
+	{
+	    "faculty":"ТОВ"
+	}
+-------------------------------------------------------------
+setFaculty:
+	mutation setFaculty($faculty: String!, $faculty_name: String!){
+	    setFaculty(FACULTY:$faculty,FACULTY_NAME:$faculty_name){
+	        FACULTY,
+	        FACULTY_NAME
+        	}
+	}
+
+	{
+	    "faculty":"4444",
+	    "faculty_name":"4444"
+	}
+------------------------------------------------------------
+setPulpit:
+	mutation setPulpit($pulpit: String!, $pulpit_name: String!,$faculty: String!){
+	    setPulpit(PULPIT:$pulpit,PULPIT_NAME:$pulpit_name,FACULTY:$faculty){
+	        PULPIT,
+	        PULPIT_NAME,
+        	FACULTY
+	    }
+	}
+
+	{
+	    "pulpit": "mkef",
+	    "pulpit_name": "dasd",
+	    "faculty": "ЛХФ"
+	}
+-------------------------------------------------------------
+setSubject:
+	mutation setSubject($subject: String!, $subject_name: String!,$pulpit: String!){
+	    setSubject(SUBJECT:$subject,SUBJECT_NAME:$subject_name,PULPIT:$pulpit){
+	        SUBJECT,
+        	SUBJECT_NAME,
+	        PULPIT
+	    }
+	}
+
+	{
+	    "subject": "123",
+	    "subject_name": "123",
+	    "pulpit": "ИСиТ"
+	}
+-------------------------------------------------------------
+setTeacher:
+	mutation setTeacher ($teacher: String!,$teacher_name:String!,$pulpit:String!) {
+	    setTeacher (TEACHER: $teacher,TEACHER_NAME:$teacher_name,PULPIT:$pulpit) {
+	        TEACHER
+	        TEACHER_NAME
+	        PULPIT
+	    }
+	}
+
+	{
+	    "teacher": "123",
+	    "teacher_name": "123",
+	    "pulpit": "ИСиТ"
+	}
+-------------------------------------------------------------
+delFaculty:
+	mutation delfaculty ($faculty: String!) {
+	    delFaculty (FACULTY: $faculty)
+	}
+
+	{
+	  "faculty": "4444"
+	}
+-------------------------------------------------------------
+delPulpit:
+	mutation delPulpit ($pulpit: String!) {
+	    delPulpit (PULPIT: $pulpit)
+	}
+
+	{
+	  "pulpit": "qw11e"
+	}
+-------------------------------------------------------------
+delSubj:
+	mutation delSubject ($subject: String!) {
+	    delSubject (SUBJECT: $subject)
+	}
+
+		{
+		"subject": "123"
+		}
+-------------------------------------------------------------
+delTeacher:
+	mutation delTeacher ($teacher: String!) {
+	    delTeacher (TEACHER: $teacher)
+	}
+
+	{
+	  "teacher": "123"
+	}
