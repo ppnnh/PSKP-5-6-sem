@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab18</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .col-3{
+            border-radius: 10px;
+            margin-bottom: 5px; 
+            font-weight: bold;
+            background-color: rgb(252, 221, 255);
+        }
+        button{
+            border-radius: 10px;
+            background-color: rgb(217, 85, 250);
+            width: 100px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        button:hover{
+            background: transparent;
+        }
+        body{
+            background-color: rgb(247, 204, 255);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LABA 04</h1>
+    <div id="get_res"></div>
+    <button onclick="get()">GET</button>
+
+    <div style="padding: 20px">
+    <form>
+        <div class="row">
+            <label class="col-2">TEACHER</label>
+            <input type="text" class="col-3" id="TEACHER"/>
+        </div>
+
+        <div class="row">
+            <label class="col-2">TEACHER_NAME</label>
+            <input type="text" class="col-3" id="TEACHER_NAME"/>
+        </div>
+
+        <div class="row">
+            <label class="col-2">PULPIT</label>
+            <input type="text" class="col-3" id="PULPIT"/>
+        </div>
+
+        <div class="row">
+            <button class="col-2" onclick="post()">POST</button>
+        </div>
+    </form>
+
+
+    <button class="col-2" onclick="check()">CHECK</button>
+    <form>
+        <div>
+            <div class="row">
+                <label class="col-2">TEACHER</label>
+                <input type="text" class="col-3"  id="Teacher" />
+            </div>
+            <div class='row'>
+                <label class='col-2'>NEW TEACHER_NAME</label>
+                <input type="text" class="col-3" id="NEWTEACHER_NAME" />
+            </div>
+            <div class='row'>
+                <label class='col-2'>NEW PULPIT</label>
+                <input type="text" class='col-3' id='NEWPULPIT'/>
+            </div>
+            <div class="row">
+                <button class="col-2" onclick="put()">PUT</button>
+            </div>
+        </div>
+    </form>
+
+    <form>
+        <div>
+            <div class="row">
+                <label class="col-2">TEACHER</label>
+                <input type="text" class="col-3" id="teacher" min="1"/>
+            </div>
+            <div class="row">
+                <button class="col-2" onclick="DELETE()">DELETE</button>
+            </div>
+        </div>
+    </div>
+    </form> 
+    <script>
+        function get(){
+            fetch('http://localhost:3000/api/teachers',{
+                method: 'GET', mode: 'no-cors',
+                headers: {'Content-Type':'application/json'}
+        }).then(resp=>resp.json())
+            .then(pdata=>{
+                get_res.innerHTML =JSON.stringify(pdata);
+            });
+        }
+        function post(){
+            let TEACHER=document.getElementById('TEACHER');
+            let TEACHER_NAME=document.getElementById('TEACHER_NAME');
+            let PULPIT=document.getElementById('PULPIT');
+
+            fetch('http://localhost:3000/api/teachers',{
+                method:'POST', 
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({TEACHER: TEACHER.value, TEACHER_NAME: TEACHER_NAME.value, PULPIT: PULPIT.value})
+            })
+            
+            .then(resp=>{return resp.json();})
+            .then((pdata)=>{console.log('post.pdata', pdata);});
+        }
+        function check(){
+        fetch("http://localhost:3000/api/teachers", {
+            method: "GET",
+            mode: "no-cors",
+            headers: {"Content-Type": "application/json"}
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((pdata) => {           
+            let index = document.getElementById("Teacher").value;
+            let teacher = pdata.find((item) => item.TEACHER.trimEnd() == index.trimEnd());
+            console.log(teacher);
+            document.getElementById("NEWTEACHER_NAME").value = teacher.TEACHER_NAME;
+            document.getElementById("NEWPULPIT").value = teacher.PULPIT;
+          });
+        }
+        function DELETE(){
+            let TEACHER=document.getElementById('teacher');
+            if (TEACHER.value){
+                fetch(`http://localhost:3000/api/teachers/${TEACHER.value}`,{
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                .then(resp=>{return resp.json();})
+                .then((pdata)=>{console.log('DELETE.pdata',pdata);})
+            }
+        }
+    </script>
+</body>
+</html>
