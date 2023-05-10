@@ -1,0 +1,48 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>{{title}}</title>
+	</head>
+	<body>
+		<h2>{{title}}</h2>
+		<div id='count'>
+				{{#each data}}
+				<input style="border-radius: 10px 10px 10px 10px;" type='text' name='{{@key}}' placeholder='{{@key}}' />
+			{{/each}}
+		</div>
+		<button style="border-radius: 5px 5px 5px 5px;" onclick='Update()'>Send</button>
+
+		<script>
+			async function Update(){
+				const children=document.getElementById('count').children;
+				const count=document.getElementById('count').children.length;
+				 const data={};
+				for(let i=0;i<count;i++){
+					data[`${children[i].name}`]=`${children[i].value}`;
+				}
+				console.log(data)
+				console.log(JSON.stringify(data))
+				
+				var formBody = [];
+				for (var property in data) {
+				var encodedKey = encodeURIComponent(property);
+				var encodedValue = encodeURIComponent(data[property]);
+				formBody.push(encodedKey + "=" + encodedValue);
+				}
+				formBody = formBody.join("&");
+				fetch('/{{model}}', {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+					},
+					body: formBody
+				})
+				window.location.href='/{{model}}'
+				
+			}
+		</script>
+	</body>
+
+</html>

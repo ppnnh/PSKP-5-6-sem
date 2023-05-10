@@ -1,0 +1,19 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>{{title}}</title>
+		<script>
+			async function Delete(){ const id=document.getElementById('id').value;
+			const response=await fetch(`http://localhost:3000/{{model}}/${id}`,{method:'DELETE'});
+			window.location.href='/{{model}}'
+			}
+		</script>
+	</head>
+	<body>
+		<h2>{{title}}</h2>
+		<input style="border-radius: 10px 10px 10px 10px;" type='text' placeholder='Id' id='id'  />
+		<button style="border-radius: 5px 5px 5px 5px;" onclick='Delete()'>Send</button>
+	</body>
+</html>

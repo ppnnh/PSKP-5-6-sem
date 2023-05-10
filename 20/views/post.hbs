@@ -1,0 +1,19 @@
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>{{title}}</title>
+	</head>
+	<body>
+		<h2>{{title}}</h2>
+		<form action='/{{model}}' method='post'>
+			{{#each data}}
+				<input style="border-radius: 10px 10px 10px 10px;" type='text' name='{{@key}}' placeholder='{{@key}}' />
+			{{/each}}
+			<input style="border-radius: 5px 5px 5px 5px;" type='submit' value='Send' />
+		</form>
+
+	</body>
+
+</html>

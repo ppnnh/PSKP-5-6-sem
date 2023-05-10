@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<div>
+    <h1>{{title}}</h1>
+	<div style="margin: 10px;">
+        <h2>GET</h2>
+        {{#each data}}
+        <a href="/{{@key}}" class="item">{{@key}}</a>
+        {{/each}}
+    </div>
+    <div style="margin: 10px;">
+        <h2>POST</h2>
+        {{#each data}}
+        <a href="/post/{{@key}}" class="item">{{@key}}</a>
+        {{/each}}
+    </div>
+    <div style="margin: 10px;">
+        <h2>PUT</h2>
+        {{#each data}}
+        <a href="/put/{{@key}}" class="item">{{@key}}</a>
+        {{/each}}
+    </div>
+    <div style="margin: 10px;">
+        <h2>DELETE</h2>
+        {{#each data}}
+        <a href="/delete/{{@key}}" class="item">{{@key}}</a>
+        {{/each}}
+    </div>
+    </div>
+</body>
+</html>

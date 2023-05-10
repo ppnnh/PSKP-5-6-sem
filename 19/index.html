@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .col-3{
+            border-radius: 10px;
+            margin-bottom: 5px; 
+            font-weight: bold;
+            background-color: rgb(252, 221, 255);
+        }
+        button{
+            border-radius: 10px;
+            background-color: rgb(217, 85, 250);
+            width: 100px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        button:hover{
+            background: transparent;
+        }
+        body{
+            background-color: rgb(247, 204, 255);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            margin: 30px;
+            font-size: 18px;
+        }
+        input{
+            width: 22px; 
+            background-color: rgb(217, 85, 250);
+            font-weight: bold; 
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+        }
+        #panel {
+			padding-top: 30px;
+			display: flex;
+			justify-content: center;
+			text-align: center;
+		}
+
+		#container {
+			display: flex;
+			justify-content: center;
+			text-align: left;
+			height: 200px;
+		}
+
+        div{
+            margin: 50px;
+        }
+        
+        
+    </style>
+</head>
+<body onload='result()'>
+    <div id="container">
+		<div class='column' id="pulpit">
+			<span></span>
+		</div>
+		<div class='column' id="pulpitName">
+			<span></span>
+		</div>
+		<div class='column' id="faculty">
+			<span></span>
+		</div>
+		<div class='column' id="count">
+			<span></span>
+		</div>
+		<div id="error"></div>
+	</div>
+	<div id="panel">
+		<button class='elem' id='prev' onclick='prevPage()'>-</button>
+		<span class='elem' id='currentNumber'></span>
+		<button class='elem' id='next' onclick='nextPage()'>+</button>
+	</div>
+
+    <script>
+	let page = 1
+	currentNumber.innerText = page
+
+	async function nextPage() {
+		page++
+		currentNumber.innerText = page
+		result()
+	}
+
+	async function prevPage() {
+		if (page > 1) {
+			page--
+			currentNumber.innerText = page
+		}
+		result()
+	}
+
+
+	async function result() {
+		fetch(`http://localhost:3000/html/${page}`, {
+			method: 'GET',
+			headers: {
+				'Content-type': 'text/html',
+			}
+		}).then(response => {
+			return response.json()
+		}).then(data => {
+			document.getElementById('pulpit').innerText = 'PULPIT\n'
+			document.getElementById('pulpitName').innerText = 'PULPIT_NAME\n'
+			document.getElementById('faculty').innerText = 'FACULTY\n'
+			document.getElementById('count').innerText = 'COUNT\n'
+
+			for (let i = 0; i < data.length; i++) {
+				document.getElementById('pulpit').innerText += JSON.stringify(data[i].PULPIT).slice(1, -1) + '\n'
+			}
+			for (let i = 0; i < data.length; i++) {
+				document.getElementById('pulpitName').innerText += JSON.stringify(data[i].PULPIT_NAME).slice(1, -1) + '\n'
+			}
+			for (let i = 0; i < data.length; i++) {
+				document.getElementById('faculty').innerText += JSON.stringify(data[i].FACULTY).slice(1, -1) + '\n'
+			}
+			for (let i = 0; i < data.length; i++) {
+				document.getElementById('count').innerText += JSON.stringify(data[i]._count.TEACHER_TEACHER_PULPITToPULPIT) + '\n'
+			}
+
+			data.length != 10 ? next.disabled = true : next.disabled = false
+
+		}).catch(err => {
+			document.getElementById('result').innerText = JSON.stringify(err)
+		}).catch(err => {
+			alert(err.message)
+		})
+
+	}
+    </script>
+</body>
+</html>

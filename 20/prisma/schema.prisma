@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model FACULTY {
+  FACULTY_ID                     String   @id(map: "PK__FACULTY__6755FF5B54670266") @db.VarChar(25)
+  FACULTY_NAME                   String?  @db.VarChar(100)
+  PULPIT_PULPIT_FACULTYToFACULTY PULPIT[] @relation("PULPIT_FACULTYToFACULTY")
+}
+
+model GROUPS {
+  GROUP_ID                     Int        @id(map: "PK__GROUPS__3EFEA3DE27B9DABE")
+  GROUP_CODE                   String?    @db.VarChar(100)
+  GROUP_SPECIALITY             String?    @db.VarChar(100)
+  PULPIT                       String?    @db.VarChar(25)
+  PULPIT_GROUPS_PULPITToPULPIT PULPIT?    @relation("GROUPS_PULPITToPULPIT", fields: [PULPIT], references: [PULPIT_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__GROUPS__PULPIT__52593CB8")
+  STUDENTS                     STUDENTS[]
+
+  @@index([GROUP_CODE, GROUP_SPECIALITY], map: "IND_SPECIALITY")
+}
+
+model PROGRESS {
+  SUBJECT                           String?   @db.VarChar(25)
+  MARK                              Int       @id(map: "PK__PROGRESS__602361D4A7DE709A")
+  STUDENT                           String?   @db.VarChar(25)
+  STUDENTS                          STUDENTS? @relation(fields: [STUDENT], references: [STUDENT_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__PROGRESS__STUDEN__03F0984C")
+  SUBJECT_PROGRESS_SUBJECTToSUBJECT SUBJECT?  @relation("PROGRESS_SUBJECTToSUBJECT", fields: [SUBJECT], references: [SUBJECT_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__PROGRESS__SUBJEC__02FC7413")
+}
+
+model PULPIT {
+  PULPIT_ID                       String    @id(map: "PK__PULPIT__41EBD3FA9CC5E081") @db.VarChar(25)
+  PULPIT_NAME                     String?   @db.VarChar(100)
+  FACULTY                         String?   @db.VarChar(25)
+  GROUPS_GROUPS_PULPITToPULPIT    GROUPS[]  @relation("GROUPS_PULPITToPULPIT")
+  FACULTY_PULPIT_FACULTYToFACULTY FACULTY?  @relation("PULPIT_FACULTYToFACULTY", fields: [FACULTY], references: [FACULTY_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__PULPIT__FACULTY__46E78A0C")
+  SUBJECT_SUBJECT_PULPITToPULPIT  SUBJECT[] @relation("SUBJECT_PULPITToPULPIT")
+  TEACHER_TEACHER_PULPITToPULPIT  TEACHER[] @relation("TEACHER_PULPITToPULPIT")
+
+  @@index([PULPIT_ID, PULPIT_NAME], map: "IND_PULPIT")
+}
+
+model STUDENTS {
+  STUDENT_ID   String     @id(map: "PK__STUDENTS__E69FE77B997F64EA") @db.VarChar(25)
+  STUDENT_NAME String?    @db.VarChar(100)
+  GROUP_ID     Int?
+  PROGRESS     PROGRESS[]
+  GROUPS       GROUPS?    @relation(fields: [GROUP_ID], references: [GROUP_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__STUDENTS__GROUP___6FE99F9F")
+}
+
+model SUBJECT {
+  SUBJECT_ID                         String     @id(map: "PK__SUBJECT__F892EEA7962503A8") @db.VarChar(25)
+  SUBJECT_NAME                       String?    @db.VarChar(100)
+  PULPIT                             String?    @db.VarChar(25)
+  PROGRESS_PROGRESS_SUBJECTToSUBJECT PROGRESS[] @relation("PROGRESS_SUBJECTToSUBJECT")
+  PULPIT_SUBJECT_PULPITToPULPIT      PULPIT?    @relation("SUBJECT_PULPITToPULPIT", fields: [PULPIT], references: [PULPIT_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__SUBJECT__PULPIT__4CA06362")
+
+  @@index([SUBJECT_ID, SUBJECT_NAME], map: "IND_SUBJECT")
+}
+
+model TEACHER {
+  TEACHER_ID                    String  @id(map: "PK__TEACHER__ACD13DF837A12E3F") @db.VarChar(25)
+  TEACHER_NAME                  String? @db.VarChar(100)
+  PULPIT                        String? @db.VarChar(25)
+  PULPIT_TEACHER_PULPITToPULPIT PULPIT? @relation("TEACHER_PULPITToPULPIT", fields: [PULPIT], references: [PULPIT_ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__TEACHER__PULPIT__49C3F6B7")
+}
